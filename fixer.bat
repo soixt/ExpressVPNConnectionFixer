@@ -1,3 +1,25 @@
+@ECHO OFF
+REM BFCPEOPTIONSTART
+REM Advanced BAT to EXE Converter www.BatToExeConverter.com
+REM BFCPEEXE=C:\Users\so\Desktop\VPNConnectionFixer.exe
+REM BFCPEICON=
+REM BFCPEICONINDEX=-1
+REM BFCPEEMBEDDISPLAY=0
+REM BFCPEEMBEDDELETE=1
+REM BFCPEADMINEXE=0
+REM BFCPEINVISEXE=0
+REM BFCPEVERINCLUDE=0
+REM BFCPEVERVERSION=1.0.0.0
+REM BFCPEVERPRODUCT=Product Name
+REM BFCPEVERDESC=Product Description
+REM BFCPEVERCOMPANY=Your Company
+REM BFCPEVERCOPYRIGHT=Copyright Info
+REM BFCPEWINDOWCENTER=1
+REM BFCPEDISABLEQE=0
+REM BFCPEWINDOWHEIGHT=30
+REM BFCPEWINDOWWIDTH=110
+REM BFCPEWTITLE=VPN Connection Fixer
+REM BFCPEOPTIONEND
 @echo off
 
 :: BatchGotAdmin
@@ -52,18 +74,22 @@ REM Display command summary as a list
 echo.
 echo Command Summary:
 for /L %%i in (0,1,4) do (
-    echo - Command: !commands[%%i]!
-    echo   Description: !descriptions[%%i]!
+    set "command=!commands[%%i]!"
+    set "description=!descriptions[%%i]!"
+    echo - Command: !command!
+    echo   Description: !description!
     if !errorlevel! equ 0 (
-        echo   Status: Success
+        echo   Status: ^(Success^)
     ) else (
-        echo   Status: Failed
+        echo   Status: ^(Failed^)
     )
     echo.
 )
 
 REM Prompt for restart or exit
-choice /c rc /m "To apply the changes completely, it is recommended to restart the PC. Press 'r' to restart the PC or 'c' to exit the program."
+echo To apply the changes completely, it is recommended to restart the PC.
+echo Press 'r' to restart the PC or 'c' to exit the program.
+choice /c rc /n /m "Press [R / C]: "
 
 if errorlevel 2 (
     schtasks /create /sc once /tn "RestartPC" /tr "shutdown /r /t 0" /ru SYSTEM
